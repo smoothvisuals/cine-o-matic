@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Cine-O-Matic</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="theme-color" content="#fd267a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Cine-O-Matic">
 <style>
   :root{
     --pink: #fd267a;
@@ -702,6 +710,11 @@ let busy = false;
 let validMovies = [];
 let activeCategory = 'all';
 
+function randInt(min, max){ return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+let lastMatchAt = 0;         // history.length value at the last match (or start)
+let nextMatchThreshold = randInt(5, 10);
+
 let watched = {};
 try{ watched = JSON.parse(localStorage.getItem('cineomatic_watched') || '{}'); }catch(err){ watched = {}; }
 
@@ -965,7 +978,10 @@ function commitSwipe(movie, dir){
 
   if(dir === 'like'){
     const pct = matchPct(movie);
-    if(history.length >= 4 && pct >= 85){
+    const swipesSinceLastMatch = history.length - lastMatchAt;
+    if(swipesSinceLastMatch >= nextMatchThreshold && pct >= 85){
+      lastMatchAt = history.length;
+      nextMatchThreshold = randInt(5, 10);
       render();
       showMatch(movie);
       return;
@@ -1079,6 +1095,8 @@ function startOver(){
   history = [];
   tasteWeights = {};
   busy = false;
+  lastMatchAt = 0;
+  nextMatchThreshold = randInt(5, 10);
   hideMatch();
   render();
 }
@@ -1195,6 +1213,10 @@ btnTheme.addEventListener('click', ()=>{
   applyTheme(!phoneEl.classList.contains('dark'));
 });
 applyTheme(localStorage.getItem('cineomatic_theme') === 'dark');
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
 
 boot();
 </script>

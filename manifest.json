@@ -1,0 +1,14 @@
+{
+  "name": "Cine-O-Matic",
+  "short_name": "Cine-O-Matic",
+  "description": "Swipe to find your next favorite movie",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0f12",
+  "theme_color": "#fd267a",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
