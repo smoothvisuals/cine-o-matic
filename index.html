@@ -214,26 +214,6 @@
   }
   .match-badge.hot{ background: var(--brand); }
 
-  .info-btn{
-    position:absolute;
-    top:14px;
-    left:14px;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background: rgba(0,0,0,.4);
-    border:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    cursor:pointer;
-    z-index:4;
-    font-size:14px;
-    font-weight:800;
-    font-style:italic;
-  }
-
   .stamp{
     position:absolute;
     top:40px;
@@ -597,11 +577,11 @@
   <div class="watched-overlay" id="watchedOverlay">
     <div class="watched-header">
       <button class="watched-back" id="btnWatchedClose">← Back</button>
-      <div class="logo" style="font-size:18px;">🎞️ Watched</div>
+      <div class="logo" style="font-size:18px;">🎞️ My List</div>
       <div style="width:56px"></div>
     </div>
     <div class="watched-tabs">
-      <button class="wtab active" data-filter="all">All</button>
+      <button class="wtab active" data-filter="towatch">To Watch</button>
       <button class="wtab" data-filter="up">👍 Liked</button>
       <button class="wtab" data-filter="down">👎 Disliked</button>
     </div>
@@ -810,8 +790,16 @@ function matchPct(m){
 }
 
 function reorderDeck(){
+  // Preserve the positions already visible in the peek stack (front + next-up) so the
+  // card the user is looking at never gets swapped out from under them mid-transition —
+  // only the not-yet-visible tail gets re-sorted by taste.
+  const KEEP = 2;
+  if(deck.length <= KEEP) return;
+  const head = deck.slice(0, KEEP);
+  const tail = deck.slice(KEEP);
   const jitter = 2.5;
-  deck.sort((a,b)=> (scoreOf(b)+ (Math.random()-0.5)*jitter) - (scoreOf(a)+ (Math.random()-0.5)*jitter));
+  tail.sort((a,b)=> (scoreOf(b)+ (Math.random()-0.5)*jitter) - (scoreOf(a)+ (Math.random()-0.5)*jitter));
+  deck = [...head, ...tail];
 }
 
 function updateTasteLine(){
@@ -837,6 +825,7 @@ function render(){
   cardStack.innerHTML = '';
   updateCounter();
   updateTasteLine();
+  updateWatchedBadge();
 
   if(deck.length === 0){
     showRecap();
@@ -846,7 +835,7 @@ function render(){
 
   const visible = deck.slice(0,3);
   visible.forEach((m, idx) => {
-    const depth = visible.length - 1 - idx; // 0 = top
+    const depth = idx; // 0 = top/front (deck[0]), higher = further back
     const el = buildCard(m, depth);
     cardStack.appendChild(el);
   });
@@ -871,7 +860,6 @@ function buildCard(m, depth){
   card.innerHTML = `
     <div class="card-photo" style="background:${gradientFor(m)}">
       ${posterImgTag}
-      <button class="info-btn" data-act="info">i</button>
       <div class="match-badge ${pct>=85 ? 'hot':''}">${showPct ? '🔥 '+pct+'% Match' : '🍿 Getting to know you'}</div>
       <div class="stamp like">LIKE</div>
       <div class="stamp nope">NOPE</div>
@@ -894,10 +882,6 @@ function buildCard(m, depth){
     </div>
   `;
 
-  card.querySelector('[data-act="info"]').addEventListener('click', (e)=>{
-    e.stopPropagation();
-    card.querySelector('.details-panel').classList.add('open');
-  });
   card.querySelector('[data-act="close-info"]').addEventListener('click', (e)=>{
     e.stopPropagation();
     card.querySelector('.details-panel').classList.remove('open');
@@ -915,7 +899,7 @@ function attachDrag(card, movie){
   const nopeStamp = card.querySelector('.stamp.nope');
 
   function onDown(e){
-    if(e.target.closest('.info-btn') || e.target.closest('.details-panel')) return;
+    if(e.target.closest('.details-panel')) return;
     dragging = true;
     startX = e.clientX; startY = e.clientY;
     card.setPointerCapture(e.pointerId);
@@ -1048,23 +1032,38 @@ function saveWatched(){
   localStorage.setItem('cineomatic_watched', JSON.stringify(watched));
 }
 
-function updateWatchedBadge(){
-  document.getElementById('watchedCount').textContent = Object.keys(watched).length;
+function toWatchList(){
+  return history
+    .filter(h => h.dir === 'like' && !watched[h.movie.id])
+    .map(h => h.movie)
+    .reverse();
 }
 
-let watchedFilter = 'all';
+function updateWatchedBadge(){
+  document.getElementById('watchedCount').textContent = toWatchList().length;
+}
+
+let watchedFilter = 'towatch';
 function renderWatchedList(){
-  const ids = Object.keys(watched).map(Number)
-    .filter(id => watchedFilter === 'all' || watched[id].rating === watchedFilter)
-    .sort((a,b) => watched[b].at - watched[a].at);
   const listEl = document.getElementById('watchedList');
-  if(!ids.length){
-    listEl.innerHTML = `<div class="watched-empty">No movies here yet.<br>Rate your matches 👍 / 👎 from the recap screen once you've watched them.</div>`;
+  let movies;
+  if(watchedFilter === 'towatch'){
+    movies = toWatchList();
+  } else {
+    movies = Object.keys(watched).map(Number)
+      .filter(id => watched[id].rating === watchedFilter)
+      .sort((a,b) => watched[b].at - watched[a].at)
+      .map(id => MOVIES.find(m=>m.id===id))
+      .filter(Boolean);
+  }
+  if(!movies.length){
+    const emptyMsg = watchedFilter === 'towatch'
+      ? `Nothing queued up yet.<br>Swipe right on a few movies and they'll show up here.`
+      : `No movies here yet.<br>Rate your matches 👍 / 👎 once you've watched them.`;
+    listEl.innerHTML = `<div class="watched-empty">${emptyMsg}</div>`;
     return;
   }
-  listEl.innerHTML = ids.map(id => {
-    const m = MOVIES.find(x=>x.id===id);
-    if(!m) return '';
+  listEl.innerHTML = movies.map(m => {
     return `
       <div class="recap-item">
         <div class="recap-poster" style="background:${gradientFor(m)}">${posterThumbHtml(m)}</div>
@@ -1150,7 +1149,8 @@ document.getElementById('btnLike').addEventListener('click', ()=>{
   flyOut(top, 1, ()=>commitSwipe(movie, 'like'));
 });
 document.getElementById('btnInfo').addEventListener('click', ()=>{
-  const panel = cardStack.querySelector('.details-panel');
+  const top = cardStack.querySelector('.card[style*="z-index: 10"]');
+  const panel = top && top.querySelector('.details-panel');
   if(panel) panel.classList.toggle('open');
 });
 
