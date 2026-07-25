@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Cine-O-Matic</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
-<meta name="theme-color" content="#fd267a">
+<meta name="theme-color" id="metaThemeColor" content="#ffffff">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -55,6 +55,20 @@
     flex-direction:column;
     position:relative;
     color: var(--ink);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Installed as a standalone app (home screen icon): go edge-to-edge on the
+     real device instead of showing the desktop-preview phone-mockup frame. */
+  @media all and (display-mode: standalone){
+    body{ padding:0; background: var(--bg); }
+    .phone{
+      max-width:100%;
+      max-height:100%;
+      border-radius:0;
+      box-shadow:none;
+    }
   }
   .phone.dark{
     --bg: #0f0f12;
@@ -1729,10 +1743,12 @@ document.getElementById('categorySelect').addEventListener('change', (e)=>{
 const phoneEl = document.querySelector('.phone');
 const btnTheme = document.getElementById('btnTheme');
 const optToggleTheme = document.getElementById('optToggleTheme');
+const metaThemeColor = document.getElementById('metaThemeColor');
 function applyTheme(dark){
   phoneEl.classList.toggle('dark', dark);
   btnTheme.textContent = dark ? '☀️' : '🌙';
   optToggleTheme.classList.toggle('on', dark);
+  metaThemeColor.setAttribute('content', dark ? '#1c1c1f' : '#ffffff');
   localStorage.setItem('cineomatic_theme', dark ? 'dark' : 'light');
 }
 btnTheme.addEventListener('click', ()=>{
