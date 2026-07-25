@@ -276,10 +276,17 @@
   }
   .match-badge.hot{ background: var(--brand); }
 
-  .watch-btn{
+  .watch-widget{
     position:absolute;
     top:14px;
     right:14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    z-index:4;
+  }
+  .watch-btn{
     width:30px;
     height:30px;
     border-radius:50%;
@@ -292,11 +299,22 @@
     align-items:center;
     justify-content:center;
     cursor:pointer;
-    z-index:4;
+    flex-shrink:0;
+  }
+  .watch-label{
+    font-size:9px;
+    font-weight:700;
+    color:#fff;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(4px);
+    padding:2px 7px;
+    border-radius:10px;
+    white-space:nowrap;
+    pointer-events:none;
   }
   .watch-popover{
     position:absolute;
-    top:52px;
+    top:76px;
     right:14px;
     max-width:78%;
     background: var(--surface);
@@ -1376,7 +1394,10 @@ function buildCard(m, depth){
     <div class="card-photo" style="background:${gradientFor(m)}">
       ${posterImgTag}
       <div class="match-badge ${pct>=85 ? 'hot':''}">${showPct ? '🔥 '+pct+'% Match' : '🍿 Getting to know you'}</div>
-      <button class="watch-btn" data-act="watch" title="Where to watch">📺</button>
+      <div class="watch-widget">
+        <button class="watch-btn" data-act="watch" title="Where to watch">📺</button>
+        <div class="watch-label">Where to watch</div>
+      </div>
       <div class="watch-popover">
         <div class="wp-title">Where to Watch</div>
         <div class="wp-body"></div>
