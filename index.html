@@ -280,13 +280,28 @@
     position:absolute;
     top:14px;
     right:14px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:5px;
+    width:52px;
+    height:54px;
     z-index:4;
   }
+  .watch-arc{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:visible;
+  }
+  .watch-arc text{
+    font-size:6px;
+    font-weight:800;
+    fill:#fff;
+    letter-spacing:.3px;
+  }
   .watch-btn{
+    position:absolute;
+    top:0;
+    left:11px;
     width:30px;
     height:30px;
     border-radius:50%;
@@ -299,22 +314,10 @@
     align-items:center;
     justify-content:center;
     cursor:pointer;
-    flex-shrink:0;
-  }
-  .watch-label{
-    font-size:9px;
-    font-weight:700;
-    color:#fff;
-    background: rgba(0,0,0,.45);
-    backdrop-filter: blur(4px);
-    padding:2px 7px;
-    border-radius:10px;
-    white-space:nowrap;
-    pointer-events:none;
   }
   .watch-popover{
     position:absolute;
-    top:76px;
+    top:72px;
     right:14px;
     max-width:78%;
     background: var(--surface);
@@ -1395,8 +1398,11 @@ function buildCard(m, depth){
       ${posterImgTag}
       <div class="match-badge ${pct>=85 ? 'hot':''}">${showPct ? '🔥 '+pct+'% Match' : '🍿 Getting to know you'}</div>
       <div class="watch-widget">
+        <svg class="watch-arc" viewBox="0 0 52 54">
+          <path id="watchArc${m.id}" d="M 5,18 A 21,21 0 0 0 47,18" fill="none"/>
+          <text><textPath href="#watchArc${m.id}" startOffset="50%" text-anchor="middle">WHERE TO WATCH</textPath></text>
+        </svg>
         <button class="watch-btn" data-act="watch" title="Where to watch">📺</button>
-        <div class="watch-label">Where to watch</div>
       </div>
       <div class="watch-popover">
         <div class="wp-title">Where to Watch</div>
