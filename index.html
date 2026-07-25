@@ -664,7 +664,157 @@ const MOVIES = [
   {t:"Shutter Island",y:2010,d:"Martin Scorsese",rt:138,r:8.2,g:["Thriller","Mystery"],tg:["twist-ending","dark","edge-of-seat"],s:"A U.S. Marshal investigates the disappearance of a patient at a psychiatric facility."},
   {t:"Toy Story",y:1995,d:"John Lasseter",rt:81,r:8.3,g:["Animation","Family","Adventure"],tg:["feel-good","nostalgic","family-friendly"],s:"Toys come to life when no one is watching, led by a cowboy doll threatened by a new spaceman toy."},
   {t:"Up",y:2009,d:"Pete Docter",rt:96,r:8.3,g:["Animation","Family","Adventure"],tg:["tearjerker","feel-good","family-friendly"],s:"An elderly widower ties balloons to his house to fulfill his lifelong dream of adventure."},
-  {t:"WALL-E",y:2008,d:"Andrew Stanton",rt:98,r:8.4,g:["Animation","Sci-Fi","Family"],tg:["feel-good","visually-stunning","family-friendly"],s:"A lonely robot on a ruined Earth falls in love with a sleek probe sent to find life."}
+  {t:"WALL-E",y:2008,d:"Andrew Stanton",rt:98,r:8.4,g:["Animation","Sci-Fi","Family"],tg:["feel-good","visually-stunning","family-friendly"],s:"A lonely robot on a ruined Earth falls in love with a sleek probe sent to find life."},
+  {t:"Die Hard",y:1988,d:"John McTiernan",rt:132,r:8.2,g:["Action","Thriller"],tg:["intense","edge-of-seat","cult-classic"],s:"An NYPD cop battles terrorists who have taken over a Los Angeles skyscraper during a Christmas party."},
+  {t:"Terminator 2: Judgment Day",y:1991,d:"James Cameron",rt:137,r:8.5,g:["Action","Sci-Fi","Thriller"],tg:["intense","epic","cult-classic"],s:"A cyborg is sent back in time to protect a young boy from a more advanced killing machine."},
+  {t:"Mission: Impossible - Fallout",y:2018,d:"Christopher McQuarrie",rt:147,r:7.7,g:["Action","Adventure","Thriller"],tg:["intense","edge-of-seat","stylish"],s:"Ethan Hunt and his team race against time after a mission gone wrong threatens global catastrophe."},
+  {t:"Gladiator",y:2000,d:"Ridley Scott",rt:155,r:8.5,g:["Action","Adventure","Drama"],tg:["epic","intense","award-winning"],s:"A betrayed Roman general sets out for revenge against the corrupt emperor who murdered his family."},
+  {t:"The Bourne Identity",y:2002,d:"Doug Liman",rt:119,r:7.9,g:["Action","Mystery","Thriller"],tg:["intense","edge-of-seat","stylish"],s:"A man with amnesia tries to uncover his true identity amid a deadly conspiracy."},
+  {t:"Kill Bill: Vol. 1",y:2003,d:"Quentin Tarantino",rt:111,r:8.2,g:["Action","Crime","Thriller"],tg:["stylish","intense","cult-classic"],s:"A former assassin wakes from a coma and sets out on a roaring rampage of revenge."},
+  {t:"Casino Royale",y:2006,d:"Martin Campbell",rt:144,r:8.0,g:["Action","Adventure","Thriller"],tg:["stylish","intense","edge-of-seat"],s:"James Bond earns his license to kill while pursuing a financier of terrorism."},
+  {t:"Skyfall",y:2012,d:"Sam Mendes",rt:143,r:7.8,g:["Action","Adventure","Thriller"],tg:["stylish","epic","intense"],s:"Bond's loyalty to M is tested as her past comes back to haunt her."},
+  {t:"Heat",y:1995,d:"Michael Mann",rt:170,r:8.3,g:["Action","Crime","Drama"],tg:["intense","slow-burn","cult-classic"],s:"A group of professional bank robbers start to feel the heat from the police after leaving a clue at their latest heist."},
+  {t:"Edge of Tomorrow",y:2014,d:"Doug Liman",rt:113,r:7.9,g:["Action","Sci-Fi"],tg:["mind-bending","intense","edge-of-seat"],s:"A soldier fighting aliens gets caught in a time loop that forces him to relive the same brutal battle."},
+  {t:"Logan",y:2017,d:"James Mangold",rt:137,r:8.1,g:["Action","Drama","Sci-Fi"],tg:["dark","tearjerker","intense"],s:"In a near future, a weary Logan cares for an ailing Professor X while a young mutant on the run needs their help."},
+  {t:"The Raid",y:2011,d:"Gareth Evans",rt:101,r:7.6,g:["Action","Crime","Thriller"],tg:["intense","stylish","edge-of-seat"],s:"A SWAT team becomes trapped in a building controlled by a ruthless crime lord."},
+  {t:"Raiders of the Lost Ark",y:1981,d:"Steven Spielberg",rt:115,r:8.4,g:["Adventure","Action"],tg:["epic","nostalgic","cult-classic"],s:"An archaeologist races against Nazi forces to find the legendary Ark of the Covenant."},
+  {t:"Jurassic Park",y:1993,d:"Steven Spielberg",rt:127,r:8.2,g:["Adventure","Sci-Fi"],tg:["epic","edge-of-seat","visually-stunning"],s:"A theme park of cloned dinosaurs descends into chaos when the creatures escape containment."},
+  {t:"The Princess Bride",y:1987,d:"Rob Reiner",rt:98,r:8.0,g:["Adventure","Romance","Comedy"],tg:["witty","nostalgic","feel-good"],s:"A farmhand-turned-pirate sets out to rescue his true love from an arranged marriage."},
+  {t:"The Lord of the Rings: The Fellowship of the Ring",y:2001,d:"Peter Jackson",rt:178,r:8.9,g:["Adventure","Fantasy","Drama"],tg:["epic","visually-stunning","award-winning"],s:"A hobbit and his companions set out to destroy a powerful ring before it falls into the wrong hands."},
+  {t:"Life of Pi",y:2012,d:"Ang Lee",rt:127,r:7.9,g:["Adventure","Drama","Fantasy"],tg:["visually-stunning","thought-provoking"],s:"A young man survives a shipwreck and shares a lifeboat with a Bengal tiger."},
+  {t:"The Revenant",y:2015,d:"Alejandro G. Iñárritu",rt:156,r:8.0,g:["Adventure","Drama"],tg:["intense","visually-stunning","award-winning"],s:"A frontiersman fights for survival after being left for dead by his hunting team."},
+  {t:"Jumanji: Welcome to the Jungle",y:2017,d:"Jake Kasdan",rt:119,r:6.9,g:["Adventure","Comedy","Fantasy"],tg:["feel-good","laugh-out-loud"],s:"Four teens are sucked into a magical video game and must survive as their avatars to escape."},
+  {t:"Inside Out",y:2015,d:"Pete Docter",rt:95,r:8.1,g:["Animation","Family","Comedy"],tg:["feel-good","tearjerker","family-friendly"],s:"The emotions inside a young girl's mind struggle to guide her through a difficult move."},
+  {t:"Finding Nemo",y:2003,d:"Andrew Stanton",rt:100,r:8.2,g:["Animation","Family","Adventure"],tg:["feel-good","family-friendly","tearjerker"],s:"A clownfish sets out across the ocean to find his missing son."},
+  {t:"The Incredibles",y:2004,d:"Brad Bird",rt:115,r:8.0,g:["Animation","Action","Family"],tg:["feel-good","family-friendly"],s:"A family of undercover superheroes tries to live a quiet suburban life while battling a new threat."},
+  {t:"Shrek",y:2001,d:"Andrew Adamson",rt:90,r:7.9,g:["Animation","Comedy","Fantasy"],tg:["laugh-out-loud","witty","nostalgic"],s:"An ogre agrees to rescue a princess in exchange for getting his swamp back from banished fairy tale creatures."},
+  {t:"How to Train Your Dragon",y:2010,d:"Dean DeBlois",rt:98,r:8.1,g:["Animation","Adventure","Family"],tg:["feel-good","tearjerker","family-friendly"],s:"A young Viking befriends a dragon, defying his tribe's tradition of dragon slaying."},
+  {t:"Zootopia",y:2016,d:"Byron Howard",rt:108,r:8.0,g:["Animation","Comedy","Family"],tg:["feel-good","witty","family-friendly"],s:"A rookie rabbit officer and a con artist fox uncover a conspiracy in a city of anthropomorphic animals."},
+  {t:"Ratatouille",y:2007,d:"Brad Bird",rt:111,r:8.1,g:["Animation","Comedy","Family"],tg:["feel-good","family-friendly"],s:"A rat who dreams of becoming a chef forms an unlikely partnership with a young kitchen worker in Paris."},
+  {t:"Monsters, Inc.",y:2001,d:"Pete Docter",rt:92,r:8.1,g:["Animation","Comedy","Family"],tg:["feel-good","family-friendly"],s:"Two monsters who scare children for a living are thrown into chaos when a little girl wanders into their world."},
+  {t:"Kung Fu Panda",y:2008,d:"Mark Osborne",rt:92,r:7.6,g:["Animation","Action","Comedy"],tg:["feel-good","laugh-out-loud","family-friendly"],s:"An overweight panda is chosen to fulfill his destiny as a legendary warrior."},
+  {t:"The Lion King",y:1994,d:"Roger Allers",rt:88,r:8.5,g:["Animation","Adventure","Family"],tg:["epic","tearjerker","family-friendly"],s:"A young lion prince flees his kingdom after his father's death, only to learn the true meaning of responsibility."},
+  {t:"Your Name",y:2016,d:"Makoto Shinkai",rt:106,r:8.4,g:["Animation","Romance","Fantasy"],tg:["romantic","mind-bending","visually-stunning"],s:"Two teenagers mysteriously begin to swap bodies, forging a bond across time and distance."},
+  {t:"The Imitation Game",y:2014,d:"Morten Tyldum",rt:114,r:8.0,g:["Biography","Drama","Thriller"],tg:["thought-provoking","award-winning","tearjerker"],s:"A British mathematician cracks a Nazi code during World War II while hiding a personal secret."},
+  {t:"Bohemian Rhapsody",y:2018,d:"Bryan Singer",rt:134,r:7.9,g:["Biography","Music","Drama"],tg:["feel-good","epic","tearjerker"],s:"The story of Queen and lead singer Freddie Mercury, leading up to their legendary Live Aid performance."},
+  {t:"Rocketman",y:2019,d:"Dexter Fletcher",rt:121,r:7.3,g:["Biography","Music","Drama"],tg:["visually-stunning","tearjerker"],s:"A musical fantasy about the life of Elton John, from his time as a prodigy to his global superstardom."},
+  {t:"The Theory of Everything",y:2014,d:"James Marsh",rt:123,r:7.7,g:["Biography","Drama","Romance"],tg:["tearjerker","romantic","award-winning"],s:"The story of the relationship between physicist Stephen Hawking and his wife."},
+  {t:"Ford v Ferrari",y:2019,d:"James Mangold",rt:152,r:8.1,g:["Biography","Drama","Action"],tg:["intense","feel-good"],s:"American engineers build a revolutionary race car to defeat Ferrari at Le Mans."},
+  {t:"The Wolf of Wall Street",y:2013,d:"Martin Scorsese",rt:180,r:8.2,g:["Biography","Crime","Drama"],tg:["dark","witty","intense"],s:"A stockbroker's rise to wealth is fueled by corruption and excess on Wall Street."},
+  {t:"Catch Me If You Can",y:2002,d:"Steven Spielberg",rt:141,r:8.1,g:["Biography","Crime","Drama"],tg:["witty","feel-good","stylish"],s:"A young con man impersonates a pilot, doctor, and lawyer while an FBI agent pursues him."},
+  {t:"A Beautiful Mind",y:2001,d:"Ron Howard",rt:135,r:8.2,g:["Biography","Drama"],tg:["thought-provoking","tearjerker","award-winning"],s:"A brilliant mathematician struggles with schizophrenia while making groundbreaking discoveries."},
+  {t:"Walk the Line",y:2005,d:"James Mangold",rt:136,r:7.8,g:["Biography","Music","Romance"],tg:["romantic","tearjerker"],s:"The story of the early life and career of country music legend Johnny Cash."},
+  {t:"Anchorman: The Legend of Ron Burgundy",y:2004,d:"Adam McKay",rt:94,r:7.2,g:["Comedy"],tg:["laugh-out-loud","quirky","cult-classic"],s:"A San Diego anchorman's world is turned upside down when a female co-anchor is hired."},
+  {t:"Step Brothers",y:2008,d:"Adam McKay",rt:98,r:6.9,g:["Comedy"],tg:["laugh-out-loud","quirky"],s:"Two grown men become stepbrothers when their single parents marry, and must learn to live together."},
+  {t:"The Big Lebowski",y:1998,d:"Coen Brothers",rt:117,r:8.1,g:["Comedy","Crime"],tg:["quirky","witty","cult-classic"],s:"A slacker mistaken for a millionaire gets entangled in a kidnapping scheme."},
+  {t:"Groundhog Day",y:1993,d:"Harold Ramis",rt:101,r:8.1,g:["Comedy","Fantasy","Romance"],tg:["feel-good","mind-bending","witty"],s:"A cynical weatherman finds himself reliving the same day over and over."},
+  {t:"Ferris Bueller's Day Off",y:1986,d:"John Hughes",rt:103,r:7.8,g:["Comedy"],tg:["feel-good","nostalgic","laugh-out-loud"],s:"A high schooler skips school to enjoy a wild day in Chicago with his friends."},
+  {t:"Dumb and Dumber",y:1994,d:"Peter Farrelly",rt:107,r:7.3,g:["Comedy"],tg:["laugh-out-loud","quirky"],s:"Two dim-witted friends embark on a cross-country road trip to return a briefcase full of money."},
+  {t:"Zoolander",y:2001,d:"Ben Stiller",rt:89,r:6.5,g:["Comedy"],tg:["laugh-out-loud","quirky"],s:"A vain male model is brainwashed to assassinate the Prime Minister of Malaysia."},
+  {t:"21 Jump Street",y:2012,d:"Phil Lord",rt:109,r:7.2,g:["Comedy","Action","Crime"],tg:["laugh-out-loud","witty"],s:"Two young cops go undercover at a high school to bust a drug ring."},
+  {t:"Booksmart",y:2019,d:"Olivia Wilde",rt:102,r:7.4,g:["Comedy"],tg:["laugh-out-loud","feel-good","witty"],s:"Two academically driven best friends try to cram four years of fun into one night before graduation."},
+  {t:"The Nice Guys",y:2016,d:"Shane Black",rt:116,r:7.4,g:["Comedy","Crime","Mystery"],tg:["witty","stylish","laugh-out-loud"],s:"A private eye and a tough enforcer investigate the disappearance of a young woman in 1970s LA."},
+  {t:"Jojo Rabbit",y:2019,d:"Taika Waititi",rt:108,r:7.9,g:["Comedy","Drama","War"],tg:["witty","tearjerker","dark"],s:"A lonely German boy whose imaginary friend is Adolf Hitler discovers his mother is hiding a Jewish girl."},
+  {t:"Goodfellas",y:1990,d:"Martin Scorsese",rt:145,r:8.7,g:["Crime","Drama","Biography"],tg:["intense","stylish","award-winning"],s:"The story of a mob associate's rise and fall within the Italian-American crime syndicate."},
+  {t:"Scarface",y:1983,d:"Brian De Palma",rt:170,r:8.3,g:["Crime","Drama"],tg:["intense","dark","cult-classic"],s:"A Cuban refugee rises to become a powerful and violent drug lord in Miami."},
+  {t:"The Usual Suspects",y:1995,d:"Bryan Singer",rt:106,r:8.5,g:["Crime","Mystery","Thriller"],tg:["twist-ending","mind-bending","cult-classic"],s:"A sole survivor tells a convoluted story about the events that led to a massacre on a boat."},
+  {t:"American Gangster",y:2007,d:"Ridley Scott",rt:157,r:7.8,g:["Crime","Drama"],tg:["intense","slow-burn"],s:"A detective pursues a drug kingpin who has taken over the Harlem drug trade."},
+  {t:"Baby Driver",y:2017,d:"Edgar Wright",rt:113,r:7.6,g:["Crime","Action","Music"],tg:["stylish","intense","edge-of-seat"],s:"A talented getaway driver relies on music to be the best in the game, until a doomed heist threatens his freedom."},
+  {t:"Lock, Stock and Two Smoking Barrels",y:1998,d:"Guy Ritchie",rt:107,r:8.1,g:["Crime","Comedy"],tg:["witty","stylish","dark"],s:"Four friends try to settle a debt after a rigged card game leaves them owing a lot of money."},
+  {t:"Reservoir Dogs",y:1992,d:"Quentin Tarantino",rt:99,r:8.3,g:["Crime","Drama","Thriller"],tg:["dark","intense","cult-classic"],s:"A botched jewelry heist leads a group of criminals to suspect one of their own is a police informant."},
+  {t:"Snatch",y:2000,d:"Guy Ritchie",rt:102,r:8.2,g:["Crime","Comedy"],tg:["witty","stylish","dark"],s:"Unscrupulous boxing promoters, small-time hoodlums, and a diamond heist collide in London's underworld."},
+  {t:"Forrest Gump",y:1994,d:"Robert Zemeckis",rt:142,r:8.8,g:["Drama","Romance"],tg:["tearjerker","feel-good","nostalgic"],s:"A slow-witted but kind-hearted man witnesses and influences several defining historical events."},
+  {t:"The Green Mile",y:1999,d:"Frank Darabont",rt:189,r:8.6,g:["Drama","Fantasy","Crime"],tg:["tearjerker","slow-burn","award-winning"],s:"A death row prison guard discovers one of his inmates has a mysterious, miraculous gift."},
+  {t:"Good Will Hunting",y:1997,d:"Gus Van Sant",rt:126,r:8.3,g:["Drama"],tg:["tearjerker","thought-provoking","award-winning"],s:"A janitor with a genius-level intellect must confront his past to unlock his potential."},
+  {t:"Manchester by the Sea",y:2016,d:"Kenneth Lonergan",rt:137,r:7.8,g:["Drama"],tg:["tearjerker","slow-burn","award-winning"],s:"A man is forced to return home to care for his teenage nephew after his brother's death."},
+  {t:"Moonlight",y:2016,d:"Barry Jenkins",rt:111,r:7.4,g:["Drama"],tg:["slow-burn","tearjerker","award-winning"],s:"A young Black man's journey through childhood, adolescence, and adulthood while grappling with his identity."},
+  {t:"The Pursuit of Happyness",y:2006,d:"Gabriele Muccino",rt:117,r:8.0,g:["Drama","Biography"],tg:["tearjerker","feel-good"],s:"A struggling salesman takes custody of his son as he battles homelessness on the road to a career."},
+  {t:"12 Years a Slave",y:2013,d:"Steve McQueen",rt:134,r:8.1,g:["Drama","Biography","History"],tg:["intense","tearjerker","award-winning"],s:"A free Black man is kidnapped and sold into slavery, enduring years of hardship before regaining his freedom."},
+  {t:"Room",y:2015,d:"Lenny Abrahamson",rt:118,r:8.1,g:["Drama","Thriller"],tg:["intense","tearjerker","award-winning"],s:"A young boy raised in captivity finally gets the chance to experience the outside world."},
+  {t:"The Shape of Water",y:2017,d:"Guillermo del Toro",rt:123,r:7.3,g:["Drama","Fantasy","Romance"],tg:["romantic","visually-stunning","award-winning"],s:"A mute janitor forms a unique relationship with an amphibious creature held in a secret government facility."},
+  {t:"Marriage Story",y:2019,d:"Noah Baumbach",rt:137,r:7.9,g:["Drama","Romance"],tg:["tearjerker","intense"],s:"A stage director and his actress wife struggle through a grueling, coast-to-coast divorce."},
+  {t:"Little Women",y:2019,d:"Greta Gerwig",rt:135,r:7.8,g:["Drama","Romance"],tg:["feel-good","tearjerker","nostalgic"],s:"The four March sisters navigate love, ambition, and independence in Civil War-era New England."},
+  {t:"Nomadland",y:2020,d:"Chloé Zhao",rt:108,r:7.4,g:["Drama"],tg:["slow-burn","thought-provoking","award-winning"],s:"A woman embarks on a journey through the American West after losing everything in the Great Recession."},
+  {t:"The Sound of Music",y:1965,d:"Robert Wise",rt:172,r:8.1,g:["Family","Musical","Romance"],tg:["feel-good","nostalgic","epic"],s:"A young governess brings music and joy to a widowed naval captain's seven children."},
+  {t:"Paddington",y:2014,d:"Paul King",rt:95,r:7.2,g:["Family","Comedy","Adventure"],tg:["feel-good","family-friendly","laugh-out-loud"],s:"A young Peruvian bear travels to London in search of a home and finds a family to take him in."},
+  {t:"Paddington 2",y:2017,d:"Paul King",rt:103,r:7.8,g:["Family","Comedy","Adventure"],tg:["feel-good","family-friendly","laugh-out-loud"],s:"Paddington is framed for a crime he didn't commit and must clear his name from behind bars."},
+  {t:"Home Alone",y:1990,d:"Chris Columbus",rt:103,r:7.7,g:["Family","Comedy"],tg:["feel-good","laugh-out-loud","nostalgic"],s:"An eight-year-old boy is accidentally left behind when his family flies to Paris for Christmas, and must defend his home from burglars."},
+  {t:"Matilda",y:1996,d:"Danny DeVito",rt:98,r:7.0,g:["Family","Comedy","Fantasy"],tg:["feel-good","quirky","family-friendly"],s:"A gifted girl with telekinetic powers overcomes her neglectful family and tyrannical school principal."},
+  {t:"E.T. the Extra-Terrestrial",y:1982,d:"Steven Spielberg",rt:115,r:7.9,g:["Family","Sci-Fi","Adventure"],tg:["tearjerker","nostalgic","family-friendly"],s:"A young boy befriends a stranded alien and helps him find a way home."},
+  {t:"The Iron Giant",y:1999,d:"Brad Bird",rt:86,r:8.1,g:["Family","Animation","Sci-Fi"],tg:["tearjerker","feel-good","family-friendly"],s:"A young boy befriends a giant robot from outer space that a paranoid government agent wants to destroy."},
+  {t:"Harry Potter and the Sorcerer's Stone",y:2001,d:"Chris Columbus",rt:152,r:7.6,g:["Fantasy","Adventure","Family"],tg:["nostalgic","epic","family-friendly"],s:"An orphaned boy discovers he's a wizard and enrolls at a magical school."},
+  {t:"Pan's Labyrinth",y:2006,d:"Guillermo del Toro",rt:118,r:8.2,g:["Fantasy","Drama","War"],tg:["dark","visually-stunning","thought-provoking"],s:"A young girl escapes into a mysterious fantasy world to cope with the horrors of fascist Spain."},
+  {t:"Big Fish",y:2003,d:"Tim Burton",rt:125,r:8.0,g:["Fantasy","Drama","Adventure"],tg:["tearjerker","visually-stunning","quirky"],s:"A son tries to separate fact from fiction in his dying father's tall tales of his epic life."},
+  {t:"Edward Scissorhands",y:1990,d:"Tim Burton",rt:105,r:7.9,g:["Fantasy","Drama","Romance"],tg:["quirky","tearjerker","visually-stunning"],s:"A gentle man with scissors for hands struggles to fit into a suburban community."},
+  {t:"Stardust",y:2007,d:"Matthew Vaughn",rt:127,r:7.6,g:["Fantasy","Adventure","Romance"],tg:["romantic","feel-good","visually-stunning"],s:"A young man ventures into a magical land to retrieve a fallen star for the woman he loves."},
+  {t:"Schindler's List",y:1993,d:"Steven Spielberg",rt:195,r:9.0,g:["History","Drama","Biography"],tg:["intense","tearjerker","award-winning"],s:"A businessman saves over a thousand Jewish refugees during the Holocaust by employing them in his factories."},
+  {t:"1917",y:2019,d:"Sam Mendes",rt:119,r:8.3,g:["History","War","Drama"],tg:["intense","visually-stunning","epic"],s:"Two soldiers race against time to deliver a message that could save hundreds of lives in World War I."},
+  {t:"Dunkirk",y:2017,d:"Christopher Nolan",rt:106,r:7.8,g:["History","War","Action"],tg:["intense","epic","edge-of-seat"],s:"Allied soldiers are evacuated from a beach besieged by enemy forces during World War II."},
+  {t:"Hidden Figures",y:2016,d:"Theodore Melfi",rt:127,r:7.8,g:["History","Drama","Biography"],tg:["feel-good","thought-provoking","award-winning"],s:"Three brilliant Black women at NASA serve as the brains behind a historic space launch."},
+  {t:"Braveheart",y:1995,d:"Mel Gibson",rt:178,r:8.3,g:["History","Action","Drama"],tg:["epic","intense","award-winning"],s:"A Scottish warrior leads his countrymen in a rebellion against English rule."},
+  {t:"Lincoln",y:2012,d:"Steven Spielberg",rt:150,r:7.3,g:["History","Drama","Biography"],tg:["slow-burn","thought-provoking","award-winning"],s:"President Lincoln works to pass the Thirteenth Amendment while the Civil War rages on."},
+  {t:"The King's Speech",y:2010,d:"Tom Hooper",rt:118,r:8.0,g:["History","Drama","Biography"],tg:["feel-good","tearjerker","award-winning"],s:"A stammering King George VI works with an unconventional speech therapist to find his voice."},
+  {t:"The Shining",y:1980,d:"Stanley Kubrick",rt:146,r:8.4,g:["Horror","Drama"],tg:["dark","slow-burn","cult-classic"],s:"A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence."},
+  {t:"The Exorcist",y:1973,d:"William Friedkin",rt:122,r:8.1,g:["Horror"],tg:["dark","intense","cult-classic"],s:"A mother seeks the help of two priests when her daughter is possessed by a mysterious entity."},
+  {t:"Halloween",y:1978,d:"John Carpenter",rt:91,r:7.7,g:["Horror","Thriller"],tg:["intense","edge-of-seat","cult-classic"],s:"A masked killer stalks babysitters on Halloween night in a small Illinois town."},
+  {t:"Alien",y:1979,d:"Ridley Scott",rt:117,r:8.5,g:["Horror","Sci-Fi"],tg:["intense","edge-of-seat","cult-classic"],s:"The crew of a commercial spacecraft encounters a deadly extraterrestrial creature."},
+  {t:"It Follows",y:2014,d:"David Robert Mitchell",rt:100,r:6.8,g:["Horror"],tg:["dark","slow-burn","edge-of-seat"],s:"A young woman is pursued by an unstoppable supernatural entity after a strange encounter."},
+  {t:"The Witch",y:2015,d:"Robert Eggers",rt:92,r:6.9,g:["Horror","Mystery"],tg:["dark","slow-burn","thought-provoking"],s:"A Puritan family's faith and unity are tested when evil forces plague their New England farm."},
+  {t:"Midsommar",y:2019,d:"Ari Aster",rt:148,r:7.1,g:["Horror","Drama"],tg:["dark","slow-burn","intense"],s:"A couple travels to a Swedish festival that reveals itself to be a sinister pagan ritual."},
+  {t:"The Conjuring",y:2013,d:"James Wan",rt:112,r:7.5,g:["Horror","Mystery","Thriller"],tg:["intense","edge-of-seat"],s:"Paranormal investigators help a family terrorized by a dark presence in their farmhouse."},
+  {t:"28 Days Later",y:2002,d:"Danny Boyle",rt:113,r:7.5,g:["Horror","Sci-Fi","Thriller"],tg:["intense","dark","edge-of-seat"],s:"Survivors of a rage-inducing virus outbreak navigate a devastated Britain."},
+  {t:"Us",y:2019,d:"Jordan Peele",rt:116,r:6.8,g:["Horror","Thriller","Mystery"],tg:["dark","twist-ending","intense"],s:"A family's vacation turns into a nightmare when their doppelgängers appear and terrorize them."},
+  {t:"A Star Is Born",y:2018,d:"Bradley Cooper",rt:136,r:7.6,g:["Music","Romance","Drama"],tg:["romantic","tearjerker","epic"],s:"A musician helps a struggling singer find fame as his own career unravels."},
+  {t:"Once",y:2007,d:"John Carney",rt:85,r:7.8,g:["Music","Romance","Drama"],tg:["romantic","feel-good","nostalgic"],s:"A busker and an immigrant develop a musical relationship over the course of one week in Dublin."},
+  {t:"Sing Street",y:2016,d:"John Carney",rt:106,r:7.9,g:["Music","Comedy","Drama"],tg:["feel-good","nostalgic","laugh-out-loud"],s:"A teenager in 1980s Dublin starts a band to impress a girl and escape a turbulent home life."},
+  {t:"West Side Story",y:2021,d:"Steven Spielberg",rt:156,r:7.3,g:["Music","Romance","Drama"],tg:["epic","tearjerker","romantic"],s:"Two star-crossed lovers from rival New York gangs fall for each other amid escalating violence."},
+  {t:"Zodiac",y:2007,d:"David Fincher",rt:157,r:7.7,g:["Mystery","Crime","Thriller"],tg:["slow-burn","dark","intense"],s:"Journalists and detectives become obsessed with tracking down the Zodiac killer in 1970s San Francisco."},
+  {t:"The Prestige",y:2006,d:"Christopher Nolan",rt:130,r:8.5,g:["Mystery","Drama","Sci-Fi"],tg:["twist-ending","mind-bending","intense"],s:"Two rival magicians engage in a bitter feud, each trying to outdo the other with increasingly dangerous tricks."},
+  {t:"Rear Window",y:1954,d:"Alfred Hitchcock",rt:112,r:8.5,g:["Mystery","Thriller"],tg:["slow-burn","edge-of-seat","cult-classic"],s:"A wheelchair-bound photographer becomes convinced a neighbor has committed murder."},
+  {t:"Chinatown",y:1974,d:"Roman Polanski",rt:130,r:8.2,g:["Mystery","Crime","Drama"],tg:["dark","slow-burn","cult-classic"],s:"A private detective uncovers a web of corruption and deceit while investigating a case in 1930s Los Angeles."},
+  {t:"The Girl with the Dragon Tattoo",y:2011,d:"David Fincher",rt:158,r:7.8,g:["Mystery","Thriller","Crime"],tg:["dark","intense","twist-ending"],s:"A journalist and a hacker investigate a decades-old disappearance for a wealthy family patriarch."},
+  {t:"Prisoners",y:2013,d:"Denis Villeneuve",rt:153,r:8.1,g:["Mystery","Thriller","Drama"],tg:["dark","intense","slow-burn"],s:"A father takes matters into his own hands after his daughter and her friend go missing."},
+  {t:"Pride & Prejudice",y:2005,d:"Joe Wright",rt:129,r:7.8,g:["Romance","Drama"],tg:["romantic","nostalgic","tearjerker"],s:"Sparks fly between the headstrong Elizabeth Bennet and the proud Mr. Darcy in 19th-century England."},
+  {t:"Before Sunrise",y:1995,d:"Richard Linklater",rt:101,r:8.1,g:["Romance","Drama"],tg:["romantic","slow-burn","thought-provoking"],s:"Two strangers meet on a train and share a night of connection walking around Vienna."},
+  {t:"Call Me by Your Name",y:2017,d:"Luca Guadagnino",rt:132,r:7.8,g:["Romance","Drama"],tg:["romantic","tearjerker","slow-burn"],s:"A summer romance blossoms between a teenager and a visiting research assistant in 1980s Italy."},
+  {t:"The Fault in Our Stars",y:2014,d:"Josh Boone",rt:126,r:7.7,g:["Romance","Drama"],tg:["tearjerker","romantic"],s:"Two teenagers with cancer fall in love after meeting at a cancer support group."},
+  {t:"Crazy Rich Asians",y:2018,d:"Jon M. Chu",rt:120,r:6.9,g:["Romance","Comedy","Drama"],tg:["feel-good","romantic","laugh-out-loud"],s:"A woman travels to Singapore to meet her boyfriend's family, only to discover they're the country's wealthiest."},
+  {t:"About Time",y:2013,d:"Richard Curtis",rt:123,r:7.8,g:["Romance","Comedy","Fantasy"],tg:["tearjerker","feel-good","romantic"],s:"A young man discovers he can travel through time and uses it to find love and fix life's mistakes."},
+  {t:"Notting Hill",y:1999,d:"Roger Michell",rt:124,r:7.2,g:["Romance","Comedy"],tg:["romantic","feel-good","laugh-out-loud"],s:"A humble bookshop owner's life changes when he falls for a famous Hollywood actress."},
+  {t:"Arrival",y:2016,d:"Denis Villeneuve",rt:116,r:7.9,g:["Sci-Fi","Drama","Mystery"],tg:["thought-provoking","slow-burn","mind-bending"],s:"A linguist is recruited to communicate with alien visitors after twelve mysterious spacecraft land around the world."},
+  {t:"Ex Machina",y:2014,d:"Alex Garland",rt:108,r:7.7,g:["Sci-Fi","Thriller","Drama"],tg:["mind-bending","slow-burn","thought-provoking"],s:"A programmer is invited to administer a Turing test to an android with artificial intelligence."},
+  {t:"District 9",y:2009,d:"Neill Blomkamp",rt:112,r:7.9,g:["Sci-Fi","Action","Thriller"],tg:["intense","thought-provoking","dark"],s:"An alien race confined to a slum in Johannesburg faces forced relocation, sparking violent unrest."},
+  {t:"The Martian",y:2015,d:"Ridley Scott",rt:144,r:8.0,g:["Sci-Fi","Adventure","Drama"],tg:["feel-good","thought-provoking","intense"],s:"An astronaut stranded on Mars must find a way to survive until rescue can arrive."},
+  {t:"Children of Men",y:2006,d:"Alfonso Cuarón",rt:109,r:7.9,g:["Sci-Fi","Drama","Thriller"],tg:["intense","dark","thought-provoking"],s:"In a future where humans can no longer reproduce, a former activist must protect the world's only pregnant woman."},
+  {t:"Looper",y:2012,d:"Rian Johnson",rt:118,r:7.4,g:["Sci-Fi","Action","Thriller"],tg:["mind-bending","intense","twist-ending"],s:"A hitman who executes targets sent from the future faces a moral crisis when his future self becomes his next target."},
+  {t:"Star Wars: Episode IV - A New Hope",y:1977,d:"George Lucas",rt:121,r:8.6,g:["Sci-Fi","Adventure","Action"],tg:["epic","nostalgic","cult-classic"],s:"A young farm boy joins a rebellion to save the galaxy from an evil empire."},
+  {t:"Minority Report",y:2002,d:"Steven Spielberg",rt:145,r:7.6,g:["Sci-Fi","Action","Thriller"],tg:["intense","thought-provoking","mind-bending"],s:"A police officer in a future where crimes are stopped before they happen becomes the suspect in a murder he hasn't committed yet."},
+  {t:"Gravity",y:2013,d:"Alfonso Cuarón",rt:91,r:7.7,g:["Sci-Fi","Drama","Thriller"],tg:["intense","visually-stunning","edge-of-seat"],s:"Two astronauts work together to survive after debris destroys their space shuttle."},
+  {t:"Annihilation",y:2018,d:"Alex Garland",rt:115,r:6.8,g:["Sci-Fi","Horror","Mystery"],tg:["mind-bending","dark","visually-stunning"],s:"A biologist joins a team investigating a mysterious zone where the laws of nature don't apply."},
+  {t:"Nightcrawler",y:2014,d:"Dan Gilroy",rt:117,r:7.9,g:["Thriller","Crime","Drama"],tg:["dark","intense","slow-burn"],s:"An ambitious loner becomes a freelance crime journalist, blurring the line between observer and participant."},
+  {t:"The Girl on the Train",y:2016,d:"Tate Taylor",rt:112,r:6.5,g:["Thriller","Mystery","Drama"],tg:["dark","twist-ending"],s:"A woman's obsession with a couple she watches from a train draws her into a missing persons investigation."},
+  {t:"Wind River",y:2017,d:"Taylor Sheridan",rt:107,r:7.7,g:["Thriller","Crime","Drama"],tg:["intense","slow-burn","dark"],s:"A wildlife tracker and a rookie FBI agent investigate a murder on a Wyoming Native American reservation."},
+  {t:"Uncut Gems",y:2019,d:"Josh and Benny Safdie",rt:135,r:7.4,g:["Thriller","Crime","Drama"],tg:["intense","edge-of-seat"],s:"A jeweler and gambling addict makes a series of high-stakes bets that could lead to the windfall of a lifetime."},
+  {t:"Saving Private Ryan",y:1998,d:"Steven Spielberg",rt:169,r:8.6,g:["War","Drama","Action"],tg:["intense","epic","award-winning"],s:"A group of soldiers is sent to retrieve a paratrooper whose brothers have died in combat."},
+  {t:"Hacksaw Ridge",y:2016,d:"Mel Gibson",rt:139,r:8.1,g:["War","Drama","Biography"],tg:["intense","tearjerker","award-winning"],s:"A World War II medic saves dozens of lives without firing a single shot, driven by his faith."},
+  {t:"Full Metal Jacket",y:1987,d:"Stanley Kubrick",rt:116,r:8.3,g:["War","Drama"],tg:["dark","intense","cult-classic"],s:"A platoon of Marines is shaped by a brutal drill instructor before facing the horrors of the Vietnam War."},
+  {t:"Apocalypse Now",y:1979,d:"Francis Ford Coppola",rt:147,r:8.4,g:["War","Drama"],tg:["dark","epic","cult-classic"],s:"A captain is sent on a mission into the Cambodian jungle to assassinate a renegade colonel."},
+  {t:"The Good, the Bad and the Ugly",y:1966,d:"Sergio Leone",rt:178,r:8.8,g:["Western","Adventure"],tg:["epic","stylish","cult-classic"],s:"Three gunslingers compete to find a fortune in buried Confederate gold."},
+  {t:"Unforgiven",y:1992,d:"Clint Eastwood",rt:130,r:8.2,g:["Western","Drama"],tg:["dark","slow-burn","award-winning"],s:"An aging outlaw takes on one last job, hunting down men who disfigured a prostitute."},
+  {t:"True Grit",y:2010,d:"Coen Brothers",rt:110,r:7.6,g:["Western","Adventure","Drama"],tg:["intense","witty","epic"],s:"A young girl hires a tough U.S. Marshal to track down her father's killer."},
+  {t:"Blade Runner",y:1982,d:"Ridley Scott",rt:117,r:8.1,g:["Sci-Fi","Thriller","Drama"],tg:["slow-burn","visually-stunning","cult-classic"],s:"A blade runner must hunt down and eliminate four replicants who have escaped to Earth."},
+  {t:"The Sixth Sense",y:1999,d:"M. Night Shyamalan",rt:107,r:8.1,g:["Mystery","Thriller","Drama"],tg:["twist-ending","dark","edge-of-seat"],s:"A child psychologist tries to help a troubled young boy who claims he can see dead people."},
+  {t:"Split",y:2016,d:"M. Night Shyamalan",rt:117,r:7.3,g:["Horror","Thriller"],tg:["dark","intense","twist-ending"],s:"Three girls are kidnapped by a man with 24 distinct personalities."},
+  {t:"Coraline",y:2009,d:"Henry Selick",rt:100,r:7.7,g:["Animation","Fantasy","Family"],tg:["dark","visually-stunning","family-friendly"],s:"A girl discovers an alternate version of her life through a secret door in her new home."},
+  {t:"La Haine",y:1995,d:"Mathieu Kassovitz",rt:98,r:8.1,g:["Drama","Crime"],tg:["dark","intense","cult-classic"],s:"Three friends in the Paris projects navigate the aftermath of a riot over one tense day."},
+  {t:"City of God",y:2002,d:"Fernando Meirelles",rt:130,r:8.6,g:["Crime","Drama"],tg:["intense","dark","award-winning"],s:"Two boys growing up in a violent Rio de Janeiro slum choose different paths, one as a photographer, the other as a criminal."},
+  {t:"Oldboy",y:2003,d:"Park Chan-wook",rt:120,r:8.4,g:["Thriller","Mystery","Drama"],tg:["dark","twist-ending","intense"],s:"A man is mysteriously imprisoned for 15 years and released without explanation, setting out for revenge."},
+  {t:"Train to Busan",y:2016,d:"Yeon Sang-ho",rt:118,r:7.6,g:["Horror","Action","Thriller"],tg:["intense","tearjerker","edge-of-seat"],s:"Passengers on a train to Busan fight for survival during a zombie outbreak."},
+  {t:"The Handmaiden",y:2016,d:"Park Chan-wook",rt:145,r:8.1,g:["Thriller","Romance","Drama"],tg:["twist-ending","stylish","romantic"],s:"A con man's plot to swindle an heiress is complicated by unexpected desire."},
+  {t:"Portrait of a Lady on Fire",y:2019,d:"Céline Sciamma",rt:122,r:8.1,g:["Romance","Drama"],tg:["romantic","slow-burn","visually-stunning"],s:"A painter falls for the reluctant bride-to-be she has been commissioned to paint."},
+  {t:"The Farewell",y:2019,d:"Lulu Wang",rt:100,r:7.5,g:["Drama","Comedy"],tg:["tearjerker","feel-good"],s:"A Chinese family returns home under the guise of a wedding to say goodbye to their beloved grandmother, who doesn't know she's terminally ill."},
+  {t:"Klaus",y:2019,d:"Sergio Pablos",rt:96,r:8.2,g:["Animation","Family","Comedy"],tg:["feel-good","family-friendly","visually-stunning"],s:"A postman on a remote island forms an unlikely friendship with a reclusive toymaker, creating the legend of Santa Claus."},
+  {t:"Spotlight",y:2015,d:"Tom McCarthy",rt:129,r:8.1,g:["Drama","Biography","Crime"],tg:["intense","thought-provoking","award-winning"],s:"A team of journalists investigates decades of child abuse cover-ups within the Catholic Church."}
 ].map((m,i)=>({id:i, ...m}));
 
 function gradientFor(m){
@@ -701,6 +851,16 @@ try{ watched = JSON.parse(localStorage.getItem('cineomatic_watched') || '{}'); }
 const OMDB_API_KEY = '93c02c05';
 const omdbCache = {};
 
+const OMDB_PERSIST_KEY = 'cineomatic_omdb_cache_v1';
+function omdbCacheKey(m){ return m.t + '::' + m.y; }
+
+let persistentOmdbCache = {};
+try{ persistentOmdbCache = JSON.parse(localStorage.getItem(OMDB_PERSIST_KEY) || '{}'); }catch(err){ persistentOmdbCache = {}; }
+
+function savePersistentOmdbCache(){
+  try{ localStorage.setItem(OMDB_PERSIST_KEY, JSON.stringify(persistentOmdbCache)); }catch(err){ /* storage unavailable/full — non-fatal, just skip persisting */ }
+}
+
 async function omdbLookup(title, year){
   const yearParam = year ? `&y=${year}` : '';
   const url = `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&type=movie${yearParam}&t=${encodeURIComponent(title)}`;
@@ -708,19 +868,63 @@ async function omdbLookup(title, year){
   return res.json();
 }
 
+// Fallback for titles the direct t= lookup mismatches (e.g. a same-name documentary
+// outranking the actual film): search, then fetch the top movie hit by exact imdbID.
+async function omdbSearchFallback(title){
+  try{
+    const searchUrl = `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&type=movie&s=${encodeURIComponent(title)}`;
+    const res = await fetch(searchUrl);
+    const json = await res.json();
+    if(json.Response !== 'True' || !json.Search || !json.Search.length) return null;
+    const best = json.Search[0];
+    const res2 = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${best.imdbID}`);
+    return res2.json();
+  }catch(err){
+    return null;
+  }
+}
+
+function isUsableOmdbResult(json){
+  return json && json.Response === 'True' &&
+    json.Poster && json.Poster !== 'N/A' &&
+    json.Actors && json.Actors !== 'N/A';
+}
+
 async function fetchOmdbData(m){
   if(omdbCache[m.id]){ patchCard(m.id); return; }
+
+  const persistKey = omdbCacheKey(m);
+  if(persistentOmdbCache[persistKey]){
+    omdbCache[m.id] = persistentOmdbCache[persistKey];
+    patchCard(m.id);
+    return;
+  }
+
+  let json = null;
+  let succeeded = false;
   try{
-    let json = await omdbLookup(m.t, m.y);
-    if(json.Response !== 'True'){
+    json = await omdbLookup(m.t, m.y);
+    if(!isUsableOmdbResult(json)){
       json = await omdbLookup(m.t, null);
     }
-    omdbCache[m.id] = (json.Response === 'True') ? {
-      poster: (json.Poster && json.Poster !== 'N/A') ? json.Poster : null,
-      actors: (json.Actors && json.Actors !== 'N/A') ? json.Actors : null
-    } : { poster: null, actors: null };
+    if(!isUsableOmdbResult(json)){
+      json = await omdbSearchFallback(m.t);
+    }
+    succeeded = isUsableOmdbResult(json);
   }catch(err){
-    omdbCache[m.id] = { poster: null, actors: null };
+    succeeded = false;
+  }
+
+  omdbCache[m.id] = succeeded ? {
+    poster: json.Poster,
+    actors: json.Actors
+  } : { poster: null, actors: null };
+
+  // Only persist genuine successes — a miss might just need a smarter query next time,
+  // and we don't want to permanently bury a real movie behind one bad match.
+  if(succeeded){
+    persistentOmdbCache[persistKey] = omdbCache[m.id];
+    savePersistentOmdbCache();
   }
   patchCard(m.id);
 }
@@ -749,7 +953,7 @@ let posterPrefetchStarted = false;
 async function prefetchAllPosters(){
   if(posterPrefetchStarted) return;
   posterPrefetchStarted = true;
-  const BATCH = 6;
+  const BATCH = 4;
   for(let i=0;i<MOVIES.length;i+=BATCH){
     const batch = MOVIES.slice(i,i+BATCH);
     await Promise.all(batch.map(fetchOmdbData));
