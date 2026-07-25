@@ -688,8 +688,14 @@
     font-size:54px;
     box-shadow: 0 0 0 4px rgba(255,255,255,.15), 0 20px 40px rgba(0,0,0,.5);
     margin: 14px 0 16px;
+    overflow:hidden;
+    position:relative;
+  }
+  .match-overlay .mposter img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   }
   .match-overlay h3{ margin:0; font-size:20px; }
+  .match-overlay .mgenres{ color:#9fdcae; font-size:12px; font-weight:700; margin-top:4px; letter-spacing:.03em; }
   .match-overlay p{ color:#9fdcae; font-size:13.5px; margin:6px 0 26px; }
   .match-overlay .row{ display:flex; gap:10px; }
   .match-overlay button{
@@ -830,10 +836,11 @@
   </div>
 
   <div class="match-overlay" id="matchOverlay">
-    <div class="mtitle">IT'S A MATCH!</div>
+    <div class="mtitle">WE FOUND A MATCH!</div>
     <div class="mposter" id="mposter"></div>
     <h3 id="mtitle2"></h3>
-    <p>This looks like exactly your kind of movie.</p>
+    <div class="mgenres" id="mGenres"></div>
+    <p>Based on what you've liked, we think you'll love this one.</p>
     <div class="row">
       <button class="secondary" id="mKeep">Keep Swiping</button>
       <button class="primary" id="mWatchlist">Add to Watchlist</button>
@@ -1542,25 +1549,46 @@ function commitSwipe(movie, dir){
 
   busy = false;
 
-  if(dir === 'like'){
-    const pct = matchPct(movie);
-    const swipesSinceLastMatch = history.length - lastMatchAt;
-    if(swipesSinceLastMatch >= nextMatchThreshold && pct >= 85){
+  const swipesSinceLastSuggestion = history.length - lastMatchAt;
+  if(swipesSinceLastSuggestion >= nextMatchThreshold){
+    const candidate = pickBestSuggestion();
+    if(candidate && matchPct(candidate) >= 85){
       lastMatchAt = history.length;
       nextMatchThreshold = randInt(5, 10);
       render();
-      showMatch(movie);
+      showMatch(candidate);
       return;
     }
   }
   render();
 }
 
+// Picks the best-scoring, not-yet-suggested movie from the part of the deck that
+// isn't already visible in the peek stack (indices 0-1 are protected by reorderDeck
+// for a seamless swipe transition, so pulling a suggestion from there would show the
+// user something they're about to see again immediately after dismissing it).
+const suggestedIds = new Set();
+function pickBestSuggestion(){
+  const pool = deck.slice(2).filter(m => !suggestedIds.has(m.id));
+  if(!pool.length) return null;
+  let best = pool[0];
+  for(const m of pool){ if(scoreOf(m) > scoreOf(best)) best = m; }
+  return best;
+}
+
+let suggestedMovie = null;
 function showMatch(movie){
+  suggestedMovie = movie;
   matchOverlay.classList.add('show');
-  document.getElementById('mposter').style.background = gradientFor(movie);
-  document.getElementById('mposter').textContent = iconFor(movie);
+  const posterEl = document.getElementById('mposter');
+  const cached = omdbCache[movie.id];
+  posterEl.style.background = gradientFor(movie);
+  posterEl.innerHTML = (cached && cached.poster)
+    ? `<img src="${cached.poster}" alt="">`
+    : '';
+  if(!cached || !cached.poster) posterEl.textContent = iconFor(movie);
   document.getElementById('mtitle2').textContent = `${movie.t} (${movie.y})`;
+  document.getElementById('mGenres').textContent = movie.g.join(' · ');
 }
 function hideMatch(){ matchOverlay.classList.remove('show'); }
 
@@ -1681,6 +1709,8 @@ function startOver(){
   busy = false;
   lastMatchAt = 0;
   nextMatchThreshold = randInt(5, 10);
+  suggestedIds.clear();
+  suggestedMovie = null;
   hideMatch();
   render();
 }
@@ -1714,8 +1744,23 @@ async function boot(){
 
 document.getElementById('btnUndo').addEventListener('click', undo);
 document.getElementById('btnRestart').addEventListener('click', startOver);
-document.getElementById('mKeep').addEventListener('click', hideMatch);
-document.getElementById('mWatchlist').addEventListener('click', hideMatch);
+document.getElementById('mKeep').addEventListener('click', ()=>{
+  if(suggestedMovie) suggestedIds.add(suggestedMovie.id);
+  suggestedMovie = null;
+  hideMatch();
+});
+document.getElementById('mWatchlist').addEventListener('click', ()=>{
+  if(suggestedMovie){
+    const idx = deck.findIndex(m=>m.id===suggestedMovie.id);
+    if(idx !== -1) deck.splice(idx,1);
+    history.push({movie: suggestedMovie, dir:'like'});
+    recomputeWeights();
+    reorderDeck();
+    suggestedMovie = null;
+  }
+  hideMatch();
+  render();
+});
 
 document.getElementById('btnNope').addEventListener('click', ()=>{
   if(busy) return;
