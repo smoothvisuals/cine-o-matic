@@ -1569,7 +1569,11 @@ function commitSwipe(movie, dir){
 // user something they're about to see again immediately after dismissing it).
 const suggestedIds = new Set();
 function pickBestSuggestion(){
-  const pool = deck.slice(2).filter(m => !suggestedIds.has(m.id));
+  // deck should already exclude anything swiped (commitSwipe splices it out before this
+  // runs), but check history directly too — belt and suspenders, since a suggestion that
+  // slips through for an already-swiped movie defeats the entire point of this feature.
+  const swipedIds = new Set(history.map(h => h.movie.id));
+  const pool = deck.slice(2).filter(m => !suggestedIds.has(m.id) && !swipedIds.has(m.id));
   if(!pool.length) return null;
   let best = pool[0];
   for(const m of pool){ if(scoreOf(m) > scoreOf(best)) best = m; }
@@ -1913,7 +1917,19 @@ async function checkForUpdates(menuItemEl){
   try{
     if('serviceWorker' in navigator){
       const reg = await navigator.serviceWorker.getRegistration();
-      if(reg) await reg.update();
+      if(reg){
+        await reg.update();
+        // Give a newly-installed worker a real chance to skipWaiting/activate
+        // (our sw.js does both) before we reload, instead of a blind fixed delay.
+        if(reg.installing || reg.waiting){
+          await new Promise(resolve => {
+            let done = false;
+            const finish = () => { if(!done){ done = true; resolve(); } };
+            navigator.serviceWorker.addEventListener('controllerchange', finish, { once:true });
+            setTimeout(finish, 2000);
+          });
+        }
+      }
     }
   }catch(err){ /* fall through to hard reload regardless */ }
   menuItemEl.textContent = '🔄 Reloading…';
