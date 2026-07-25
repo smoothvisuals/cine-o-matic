@@ -477,7 +477,7 @@
   .btn-nope{ width:58px; height:58px; color:#ff3b30; }
   .btn-info{ width:42px; height:42px; color:#3f8efc; }
   .btn-like{ width:58px; height:58px; color:#4cd964; }
-  .btn svg{ width:46%; height:46%; }
+  .btn svg{ width:46%; height:46%; filter: drop-shadow(0 1.5px 1.5px rgba(0,0,0,.3)); }
 
   .empty-state, .recap{
     position:absolute; inset:0;
@@ -573,6 +573,7 @@
     border-radius:20px;
     cursor:pointer;
     color: var(--ink);
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
   }
   .watched-tabs{
     display:flex;
