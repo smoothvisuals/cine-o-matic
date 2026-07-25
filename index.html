@@ -377,6 +377,7 @@
   }
   .stamp.like{ left:24px; color:#4cd964; border-color:#4cd964; transform: rotate(-18deg); }
   .stamp.nope{ right:24px; color:#ff3b30; border-color:#ff3b30; transform: rotate(18deg); }
+  .stamp.save{ left:50%; top:110px; color:#3f8efc; border-color:#3f8efc; transform: translateX(-50%); }
 
   .card-overlay{
     position:absolute;
@@ -1411,6 +1412,7 @@ function buildCard(m, depth){
       </div>
       <div class="stamp like">LIKE</div>
       <div class="stamp nope">NOPE</div>
+      <div class="stamp save">SAVED</div>
       <div class="poster-icon">${iconFor(m)}</div>
       <div class="card-overlay">
         <div class="title-row"><h2>${m.t}</h2><span class="year">${m.y}</span></div>
@@ -1452,9 +1454,10 @@ function buildCard(m, depth){
 }
 
 function attachDrag(card, movie){
-  let startX=0, startY=0, dx=0, dy=0, dragging=false;
+  let startX=0, startY=0, dx=0, dy=0, rawDy=0, dragging=false;
   const likeStamp = card.querySelector('.stamp.like');
   const nopeStamp = card.querySelector('.stamp.nope');
+  const saveStamp = card.querySelector('.stamp.save');
 
   function onDown(e){
     if(e.target.closest('.details-panel') || e.target.closest('.watch-btn') || e.target.closest('.watch-popover')) return;
@@ -1466,11 +1469,20 @@ function attachDrag(card, movie){
   function onMove(e){
     if(!dragging) return;
     dx = e.clientX - startX;
-    dy = (e.clientY - startY) * 0.4;
-    const rot = Math.max(-18, Math.min(18, dx/12));
-    card.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
-    likeStamp.style.opacity = Math.max(0, Math.min(1, dx/100));
-    nopeStamp.style.opacity = Math.max(0, Math.min(1, -dx/100));
+    rawDy = e.clientY - startY;
+    const verticalDominant = Math.abs(rawDy) > Math.abs(dx) && rawDy > 0;
+    dy = verticalDominant ? rawDy : rawDy * 0.4;
+    const rot = verticalDominant ? 0 : Math.max(-18, Math.min(18, dx/12));
+    card.style.transform = `translate(${verticalDominant ? 0 : dx}px, ${dy}px) rotate(${rot}deg)`;
+    if(verticalDominant){
+      saveStamp.style.opacity = Math.max(0, Math.min(1, rawDy/100));
+      likeStamp.style.opacity = 0;
+      nopeStamp.style.opacity = 0;
+    } else {
+      saveStamp.style.opacity = 0;
+      likeStamp.style.opacity = Math.max(0, Math.min(1, dx/100));
+      nopeStamp.style.opacity = Math.max(0, Math.min(1, -dx/100));
+    }
   }
   function onUp(){
     if(!dragging) return;
@@ -1480,21 +1492,27 @@ function attachDrag(card, movie){
       card.style.transform = 'translate(0,0) rotate(0)';
       likeStamp.style.opacity = 0;
       nopeStamp.style.opacity = 0;
-      dx = 0; dy = 0;
+      saveStamp.style.opacity = 0;
+      dx = 0; dy = 0; rawDy = 0;
       return;
     }
-    if(dx > 110){
+    const verticalDominant = Math.abs(rawDy) > Math.abs(dx) && rawDy > 0;
+    if(verticalDominant && rawDy > 110){
+      busy = true;
+      flyOutDown(card, () => commitSwipe(movie, 'like'));
+    } else if(!verticalDominant && dx > 110){
       busy = true;
       flyOut(card, 1, () => commitSwipe(movie, 'like'));
-    } else if(dx < -110){
+    } else if(!verticalDominant && dx < -110){
       busy = true;
       flyOut(card, -1, () => commitSwipe(movie, 'nope'));
     } else {
       card.style.transform = 'translate(0,0) rotate(0)';
       likeStamp.style.opacity = 0;
       nopeStamp.style.opacity = 0;
+      saveStamp.style.opacity = 0;
     }
-    dx = 0; dy = 0;
+    dx = 0; dy = 0; rawDy = 0;
   }
 
   card.addEventListener('pointerdown', onDown);
@@ -1505,6 +1523,12 @@ function attachDrag(card, movie){
 
 function flyOut(card, dir, cb){
   card.style.transform = `translate(${dir*650}px, -40px) rotate(${dir*30}deg)`;
+  card.style.opacity = '0';
+  setTimeout(cb, 220);
+}
+
+function flyOutDown(card, cb){
+  card.style.transform = 'translate(0px, 800px) rotate(0deg)';
   card.style.opacity = '0';
   setTimeout(cb, 220);
 }
