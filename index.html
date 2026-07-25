@@ -199,7 +199,7 @@
   .match-badge{
     position:absolute;
     top:14px;
-    right:14px;
+    left:14px;
     background: rgba(0,0,0,.45);
     backdrop-filter: blur(4px);
     color:#fff;
@@ -213,6 +213,70 @@
     z-index:3;
   }
   .match-badge.hot{ background: var(--brand); }
+
+  .watch-btn{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(4px);
+    border:none;
+    color:#fff;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:4;
+  }
+  .watch-popover{
+    position:absolute;
+    top:52px;
+    right:14px;
+    max-width:78%;
+    background: var(--surface);
+    border-radius:14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    padding:12px 14px;
+    z-index:8;
+    display:none;
+  }
+  .watch-popover.open{ display:block; }
+  .watch-popover .wp-title{
+    font-size:11.5px;
+    font-weight:700;
+    color: var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    margin-bottom:8px;
+  }
+  .watch-popover .wp-providers{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    max-width:220px;
+  }
+  .watch-popover .wp-pill{
+    font-size:12px;
+    font-weight:600;
+    color: var(--ink);
+    background: var(--surface-alt);
+    padding:5px 10px;
+    border-radius:20px;
+    white-space:nowrap;
+  }
+  .watch-popover .wp-empty{
+    font-size:12.5px;
+    color: var(--muted);
+    max-width:200px;
+  }
+  .watch-popover .wp-loading{
+    font-size:12.5px;
+    color: var(--muted);
+  }
 
   .stamp{
     position:absolute;
@@ -917,8 +981,9 @@ async function fetchOmdbData(m){
 
   omdbCache[m.id] = succeeded ? {
     poster: json.Poster,
-    actors: json.Actors
-  } : { poster: null, actors: null };
+    actors: json.Actors,
+    imdbID: json.imdbID || null
+  } : { poster: null, actors: null, imdbID: null };
 
   // Only persist genuine successes — a miss might just need a smarter query next time,
   // and we don't want to permanently bury a real movie behind one bad match.
@@ -927,6 +992,98 @@ async function fetchOmdbData(m){
     savePersistentOmdbCache();
   }
   patchCard(m.id);
+}
+
+// --- Where to Watch (TMDB Watch Providers) ---
+// Fetched on-demand per movie (only when the user opens the popover), never as part of
+// boot prefetch — this is a separate, much higher-limit API from OMDb, but there's no
+// reason to burn calls checking availability for titles nobody looks at.
+// `mediaType` is 'movie' | 'tv' so this same path works once TV shows are added later —
+// TMDB exposes an identical /tv/{id}/watch/providers shape, just swap the segment.
+const TMDB_API_KEY = 'f9a37cae5ca4e95e5b517d1d6e6db028';
+
+const WATCH_PROVIDERS_PERSIST_KEY = 'cineomatic_watch_providers_v1';
+let persistentWatchProviders = {};
+try{ persistentWatchProviders = JSON.parse(localStorage.getItem(WATCH_PROVIDERS_PERSIST_KEY) || '{}'); }catch(err){ persistentWatchProviders = {}; }
+function saveWatchProviders(){
+  try{ localStorage.setItem(WATCH_PROVIDERS_PERSIST_KEY, JSON.stringify(persistentWatchProviders)); }catch(err){ /* non-fatal */ }
+}
+
+async function fetchWatchProviders(imdbID, mediaType = 'movie'){
+  if(persistentWatchProviders[imdbID]) return persistentWatchProviders[imdbID];
+  if(!TMDB_API_KEY) return { configured: false, providers: [], rentBuy: [] };
+
+  try{
+    const findUrl = `https://api.themoviedb.org/3/find/${imdbID}?api_key=${TMDB_API_KEY}&external_source=imdb_id`;
+    const findJson = await (await fetch(findUrl)).json();
+    const results = mediaType === 'tv' ? findJson.tv_results : findJson.movie_results;
+    if(!results || !results.length){
+      const result = { configured: true, providers: [], rentBuy: [] };
+      persistentWatchProviders[imdbID] = result;
+      saveWatchProviders();
+      return result;
+    }
+
+    const tmdbId = results[0].id;
+    const provUrl = `https://api.themoviedb.org/3/${mediaType}/${tmdbId}/watch/providers?api_key=${TMDB_API_KEY}`;
+    const provJson = await (await fetch(provUrl)).json();
+    const us = provJson.results && provJson.results.US;
+
+    const stream = new Set();
+    const rentBuy = new Set();
+    if(us){
+      (us.flatrate || []).forEach(p => stream.add(p.provider_name));
+      (us.ads || []).forEach(p => stream.add(p.provider_name));
+      (us.free || []).forEach(p => stream.add(p.provider_name));
+      (us.rent || []).forEach(p => rentBuy.add(p.provider_name));
+      (us.buy || []).forEach(p => rentBuy.add(p.provider_name));
+    }
+
+    const result = { configured: true, providers: [...stream], rentBuy: [...rentBuy], link: us && us.link };
+    persistentWatchProviders[imdbID] = result;
+    saveWatchProviders();
+    return result;
+  }catch(err){
+    return { configured: true, providers: [], rentBuy: [], error: true };
+  }
+}
+
+async function loadWatchProviders(m, popoverEl){
+  const body = popoverEl.querySelector('.wp-body');
+  const cached = omdbCache[m.id];
+  const imdbID = cached && cached.imdbID;
+
+  if(!imdbID){
+    body.innerHTML = `<div class="wp-empty">Unavailable right now.</div>`;
+    return;
+  }
+
+  body.innerHTML = `<div class="wp-loading">Checking…</div>`;
+  const result = await fetchWatchProviders(imdbID, 'movie');
+
+  if(!popoverEl.classList.contains('open')) return; // closed while we were fetching
+
+  if(!result.configured){
+    body.innerHTML = `<div class="wp-empty">Streaming lookup isn't set up yet.</div>`;
+    return;
+  }
+  if(result.error){
+    body.innerHTML = `<div class="wp-empty">Couldn't check right now — try again later.</div>`;
+    return;
+  }
+  if(!result.providers.length && !result.rentBuy.length){
+    body.innerHTML = `<div class="wp-empty">Not currently streaming in the US.</div>`;
+    return;
+  }
+
+  let html = '';
+  if(result.providers.length){
+    html += `<div class="wp-providers">${result.providers.map(p=>`<span class="wp-pill">${p}</span>`).join('')}</div>`;
+  }
+  if(result.rentBuy.length){
+    html += `<div class="wp-title" style="margin-top:8px;">Rent / Buy</div><div class="wp-providers">${result.rentBuy.map(p=>`<span class="wp-pill">${p}</span>`).join('')}</div>`;
+  }
+  body.innerHTML = html;
 }
 
 function patchCard(id){
@@ -1065,6 +1222,11 @@ function buildCard(m, depth){
     <div class="card-photo" style="background:${gradientFor(m)}">
       ${posterImgTag}
       <div class="match-badge ${pct>=85 ? 'hot':''}">${showPct ? '🔥 '+pct+'% Match' : '🍿 Getting to know you'}</div>
+      <button class="watch-btn" data-act="watch" title="Where to watch">📺</button>
+      <div class="watch-popover">
+        <div class="wp-title">Where to Watch</div>
+        <div class="wp-body"></div>
+      </div>
       <div class="stamp like">LIKE</div>
       <div class="stamp nope">NOPE</div>
       <div class="poster-icon">${iconFor(m)}</div>
@@ -1091,6 +1253,16 @@ function buildCard(m, depth){
     card.querySelector('.details-panel').classList.remove('open');
   });
 
+  card.querySelector('[data-act="watch"]').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const popover = card.querySelector('.watch-popover');
+    const wasOpen = popover.classList.contains('open');
+    document.querySelectorAll('.watch-popover.open').forEach(p=>p.classList.remove('open'));
+    if(wasOpen) return;
+    popover.classList.add('open');
+    loadWatchProviders(m, popover);
+  });
+
   if(depth === 0){
     attachDrag(card, m);
   }
@@ -1103,7 +1275,7 @@ function attachDrag(card, movie){
   const nopeStamp = card.querySelector('.stamp.nope');
 
   function onDown(e){
-    if(e.target.closest('.details-panel')) return;
+    if(e.target.closest('.details-panel') || e.target.closest('.watch-btn') || e.target.closest('.watch-popover')) return;
     dragging = true;
     startX = e.clientX; startY = e.clientY;
     card.setPointerCapture(e.pointerId);
@@ -1364,6 +1536,11 @@ document.addEventListener('keydown', (e)=>{
   if(e.key === 'ArrowLeft') document.getElementById('btnNope').click();
   if(e.key === 'Backspace' || e.key === 'u') undo();
   if(e.key === 'i') document.getElementById('btnInfo').click();
+});
+
+document.addEventListener('click', (e)=>{
+  if(e.target.closest('.watch-btn') || e.target.closest('.watch-popover')) return;
+  document.querySelectorAll('.watch-popover.open').forEach(p=>p.classList.remove('open'));
 });
 
 recapList.addEventListener('click', (e)=>{
